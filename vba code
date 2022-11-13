@@ -1,0 +1,44 @@
+Sub stocks()
+
+    For Each ws In Worksheets
+    
+        Dim WorksheetsName As String
+        Dim i As Long
+        Dim j As Long
+        Dim TickCount As Long
+        Dim LastRowA As Long
+        Dim LastRowI As Long
+        Dim Percentchange As Long
+        Dim GreatestVolume As Long
+        
+        WorksheetName = ws.Name
+        
+        'new colum names
+        ws.Cells(1, 9).Value = "Ticker"
+        ws.Cells(1, 10).Value = "Yearly Change"
+        ws.Cells(1, 11).Value = "Change percentage"
+        ws.Cells(1, 12).Value = "Total Stock Volume"
+        
+        'set ticker at the beginnign of the data set with #s
+        TickCount = 2
+        j = 2
+        
+        'Go till there's a blank
+         LastRowA = ws.Cells(Rows.Count, 1).End(xlUp).Row
+                
+
+        'Loop through
+        For i = 2 To LastRowA
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+            ws.Cells(TickCount, 9).Value = ws.Cells(i, 1).Value
+            ws.Cells(TickCount, 10).Value = ws.Cells(i, 6).Value - ws.Cells(j, 3).Value
+            
+            'If loss the turn red
+            If ws.Cells(TickCount, 10).Value < 0 Then
+            ws.Cells(TickCount, 10).Interior.ColorIndex = 3
+            
+            'if gain turn green
+            Else
+            ws.Cells(TickCount, 10).Interior.ColorIndex = 4
+
+            End If
